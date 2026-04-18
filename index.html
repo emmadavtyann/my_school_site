@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Աշոտ Մանուկյանի անվան N93 դպրոց</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            background: #fff;
+            padding: 40px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 32px;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .profile-img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .director-name {
+            color: #3498db;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .director-name:hover {
+            color: #2c3e50;
+        }
+        .modal-check {
+            display: none;
+        }
+        .info-popup {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-check:checked+.director-name+.info-popup {
+            display: block;
+        }
+        .info-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 25px;
+            width: 320px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            line-height: 1.5;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 25px;
+            color: #888;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            color: black;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        ul li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        ul li strong {
+            color: #2980b9;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .main-text {
+            text-align: justify;
+            margin: 30px 0;
+            font-size: 18px;
+        }
+        .banner-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .gallery {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .gallery img {
+            width: 250px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .school-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+            margin: 20px auto;
+        }
+        .video-group {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .video-group video {
+            width: 280px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .modal-check {
+            display: none;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .modal-check:checked+.btn+.modal {
+            display: block;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffffff;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            outline: none;
+        }
+        .btn-email {
+            background: linear-gradient(45deg, #e491a4, #ff765e);
+        }
+        .btn-phone {
+            background: linear-gradient(45deg, #51b2aa, #73efa3);
+        }
+        .btn:hover {
+            transform: scale(1.08) translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.1);
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .modal-content .btn {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+        .contact-section {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .footer-info {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Աշոտ Մանուկյանի անվան N93 միջնակարգ դպրոց</h1>
+
+        <img src="1.jpg" alt="Դպրոցի տարբերանշան" class="profile-img">
+
+        <ul>
+            <li>
+                <strong>Տնօրեն՝</strong>
+                <input type="checkbox" id="director-info" class="modal-check">
+
+                <label for="director-info" class="director-name">Իրինա Հակոբյան</label>
+
+                <div class="info-popup">
+                    <div class="info-content">
+                        <label for="director-info" class="close-btn">&times;</label>
+                        <h3>Իրինա Հակոբյան</h3>
+                        <p><strong>Կրթություն՝</strong> Բարձրագույն մանկավարժական</p>
+                        <p><strong>Փորձառություն՝</strong> Ավելի քան 20 տարի կրթական համակարգում։</p>
+                        <p>2023թ-ին նշանակվել է Երևանի Աշոտ Մանուկյանի անվան հ․ 93 միջնակարգ դպրոց ՊՈԱԿ-ի տնօրեն։</p>
+                        <p>Իրինա Հակոբյանը ղեկավարում է N93 դպրոցը՝ մեծ ուշադրություն դարձնելով ուսման որակին և
+                            հայրենասիրական դաստիարակությանը։</p>
+                    </div>
+                </div>
+            </li>
+            <li><strong>Փոխտնօրեններ՝</strong> Ստեփանյան Գայանե և Մանուկյան Լուսինե</li>
+            <li><strong>Հասցե՝</strong> Հայաստան, ք․ Երևան, Դավթաշեն, 5-րդ փողոց, 2/4 շենք</li>
+            <li><strong>Հեռախոսահամար՝</strong> +374-10-363183</li>
+            <li><strong>Կայք՝</strong> <a href="https://yerevan93.schoolsite.am/"
+                    target="_blank">yerevan93.schoolsite.am</a></li>
+            <li><strong>Սոց. հարթակ՝</strong> <a href="https://www.facebook.com/..." target="_blank">Facebook էջ</a>
+            </li>
+        </ul>
+
+        <video class="school-video" controls>
+            <source src="dproc.mp4" type="video/mp4">
+        </video>
+
+        <div class="main-text">
+            <p>Երևանի Աշոտ Մանուկյանի անվան հ.93 միջնակարգ դպրոցը հիմնադրվել է 1939 թվականին, իսկ 1978 թվականին
+                տեղափոխվել է նոր շենք։ 1998 թվականին դպրոցը անվանակոչվել է Արցախի հերոսամարտի մասնակից Աշոտ Մանուկյանի
+                անունով։</p>
+
+            <img src="2.png" alt="Դպրոցի շենքը" class="banner-img">
+
+            <p>Այստեղ հանրակրթական դպրոց է, որտեղ սովորում են բազմաթիվ աշակերտներ և աշխատում են փորձառու ուսուցիչներ։
+            </p>
+        </div>
+
+        <div class="gallery">
+            <img src="3.jpg" alt="Նկար 1">
+            <img src="4.jpg" alt="Նկար 2">
+            <img src="5.jpg" alt="Նկար 3">
+        </div>
+
+        <p> Դպրոցում մեծ ուշադրություն է դարձվում ոչ միայն կրթությանը, այլև աշակերտների դաստիարակությանը, հայրենասիրական
+            ու մշակութային արժեքների ձևավորմանը։ Այստեղ կազմակերպվում են տարբեր միջոցառումներ, մրցույթներ և
+            օլիմպիադաներ։</p>
+
+        <img src="6.png" class="banner-img">
+
+        <p>Դպրոցում նաև անցկացվում են միջոցառումներ։ Վերջին տարիների միջոցառումներից հատկապես աչքի են ընկնում Տրնդեզը և
+            2025 թվականի դեկտեմբերի 5 դպրոցում առաջին անգամ անցկացված ամանորյա տոնավաճառը, որի ընթացքում աշակերտները
+            վաճառում էին իրենց ձեռքով պատրաստված իրեր </p>
+
+        <div class="video-group">
+            <video controls>
+                <source src="trndez.mp4" type="video/mp4">
+            </video>
+
+            <video controls>
+                <source src="amanor.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="main-text">
+            <h3>Դպրոցական թանգարան</h3>
+            <p>Դպրոցում գործում է հատուկ թանգարան՝ նվիրված հերոս Աշոտ Մանուկյանի հիշատակին։ Թանգարանը ստեղծվել է,
+                որպեսզի պահպանվի դպրոցի պատմությունը և ներկայացվի Աշոտ Մանուկյանի կյանքն ու գործունեությունը։ Նա եղել է
+                դպրոցի սան և մասնակցել է Արցախի ազատամարտին։ Թանգարանում պահպանվում են նրա անձնական իրերը, լուսանկարները
+                և ռազմական պատմությանն առնչվող նյութեր ինչպես նաև դպրոցի պատմությանը վերաբերող ցուցանմուշներ։</p>
+        </div>
+
+        <div class="gallery">
+            <img src="7.jpg" alt="Թանգարան 1">
+            <img src="8.jpg" alt="Թանգարան 2">
+            <img src="9.jpg" alt="Թանգարան 3">
+        </div>
+
+        <p>№93 դպրոցը կարևոր կրթական հաստատություն է, որը տարիներ շարունակ կրթում և դաստիարակում է սերունդներ՝
+            փոխանցելով գիտելիք և ազգային արժեքներ։</p>
+
+        <img src="10.png" alt="Վերջին նկար" class="banner-img">
+
+        <div class="contact-section">
+            <input type="checkbox" id="check-email" class="modal-check">
+            <label for="check-email" class="btn btn-email">📧 Գրել նամակ</label>
+
+            <div class="modal">
+                <div class="modal-content">
+                    <label for="check-email" class="close">&times;</label>
+                    <h3>Ուղարկել հաղորդագրություն</h3>
+                    <input type="text" placeholder="Անուն">
+                    <input type="text" placeholder="Ազգանուն">
+                    <textarea placeholder="Ձեր նամակը..." rows="4"></textarea>
+                    <button class="btn btn-email">Ուղարկել</button>
+                </div>
+            </div>
+
+            <input type="checkbox" id="check-phone" class="modal-check">
+            <label for="check-phone" class="btn btn-phone">📞 Զանգահարել</label>
+
+            <div class="modal">
+                <div class="modal-content">
+                    <label for="check-phone" class="close">&times;</label>
+                    <h3>Հետադարձ զանգ</h3>
+                    <p>Լրացրեք ձեր համարը և մենք կզանգահարենք ձեզ:</p>
+                    <input type="text" placeholder="Անուն">
+                    <input type="tel" placeholder="+374 __ __ __ __">
+                    <button class="btn btn-phone">Պատվիրել զանգ</button>
+                </div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Անուն</th>
+                    <th>Ազգանուն</th>
+                    <th>Աշխատանք</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Նանե</td>
+                    <td>Բաղդասարյան</td>
+                    <td>Մշակելև ձևավորել է աղյուսակը</td>
+                </tr>
+                <tr>
+                    <td>Էմմա</td>
+                    <td>Դավթյան</td>
+                    <td>Մշակել է HTML կոդը</td>
+                </tr>
+                <tr>
+                    <td>Անի</td>
+                    <td>Գևորգյան</td>
+                    <td>Մշակել է տեղեկությունը դպրոցի մասին</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>Այս կայքը պատրաստվել է մեր Թվային Գրագիտություն և Համակարգչային Գիտություն դասերի շրջանակում:
+        Մենք կիրառել ենք մեր ստացած գիտելիքները գործնականում։Հատուկ շնորհակալություն ենք հայտնում մեր ուսուցչին՝ Ալլա
+        Կարապետյանին,
+        ում օգնությամբ կարողացանք կյանքի կոչել մեր այս նախագիծը և սովորել կայքաշինության գաղտնիքները։
+        Սա մեր առաջին քայլն է թվային աշխարհում։</p>
+</body>
+</html>
